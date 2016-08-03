@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.btn_test_zxing)
     Button testZxing;
 
-
-
-
     @BindView(R.id.m_iv)
     ImageView imageView;
 
