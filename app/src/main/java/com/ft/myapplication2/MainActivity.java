@@ -70,35 +70,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-    //=========================Test RXJava====================================
-
-    public static final String TAG = "RXJAVA";
-
     
-    public void testRxJavaScheduler3_map(){
-        Observable.just("images/logo.png") //输入类型 String
-                .map(new Func1<String, Bitmap>() {
-                    @Override
-                    public Bitmap call(String filePath) {
-                        return getBitmapFromFilePath(filePath);
-                    }
-                })
-                .subscribe(new Action1<Bitmap>() {
-                    @Override
-                    public void call(Bitmap bitmap) {
-                        showBitmap(bitmap);
-                    }
-                });
-    }
-
-    public Bitmap getBitmapFromFilePath(String filePath){
-        return null;
-    }
-
-    public void showBitmap(Bitmap bitmap){
-
-    }
 
     //===================================================================
 
