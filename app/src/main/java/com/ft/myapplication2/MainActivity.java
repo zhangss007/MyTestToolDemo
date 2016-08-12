@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -27,6 +28,7 @@ import com.ft.myapplication2.dagger2_test.DaggerTest;
 import com.ft.myapplication2.rxjava.RxJava_Scheduler_DrableRes;
 import com.ft.myapplication2.sample.BusinessLogic;
 import com.ft.myapplication2.sample.Todo;
+import com.ft.myapplication2.uri.TestUri;
 import com.ft.myapplication2.utils.L;
 import com.ft.myapplication2.utils.T;
 import com.squareup.okhttp.Call;
@@ -66,8 +68,14 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.m_et)
     EditText mshow;
 
+    @BindView(R.id.btn_uninstall_app)
+    Button uninstallApp;
+
+    @BindView(R.id.btn_test_uri)
+    Button testUri;
+
     //@OnClick(R.id.btn_test_rx_java_1)
-    @OnClick({R.id.btn_test_rx_java_1,R.id.btn_test_zxing,R.id.btn_activity_manager})
+    @OnClick({R.id.btn_test_rx_java_1,R.id.btn_test_zxing,R.id.btn_activity_manager,R.id.btn_uninstall_app,R.id.btn_test_uri})
     public void onClick(View view){
         if (rxJavaTest == view){
 
@@ -80,8 +88,24 @@ public class MainActivity extends AppCompatActivity
 
         }else if (testActivityManager == view){
 
+        }else if (uninstallApp == view){
+            Uri packageUri = Uri.parse("package:"+MainActivity.this.getPackageName());
+            Intent intent = new Intent(Intent.ACTION_DELETE,packageUri);
+            startActivity(intent);
+        }else if (testUri == view){
+
+//            TestUri.testUri_message(MainActivity.this);
+            Intent getImage = new Intent(Intent.ACTION_GET_CONTENT);
+            getImage.addCategory(Intent.CATEGORY_OPENABLE);
+            getImage.setType(MIME_TYPE_IMAGE_JPEG);
+            startActivityForResult(getImage, ACTIVITY_GET_IMAGE);
         }
+
     }
+
+    public static final String MIME_TYPE_IMAGE_JPEG = "image/*";
+    public static final int ACTIVITY_GET_IMAGE = 0;
+
 
     //=======================okhttp test=================================
 

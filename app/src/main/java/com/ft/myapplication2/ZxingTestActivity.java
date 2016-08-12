@@ -73,4 +73,17 @@ public class ZxingTestActivity extends AppCompatActivity {
         webView.loadUrl("javascript:showInfoFromJava('" + msg + "')");
     }
 
+    /**
+     *   function sendInfoToJava(){
+     //调用android程序中的方法，并传递参数
+     var name = document.getElementById("name_input").value;
+     window.AndroidWebView.showInfoFromJs(name);
+     }
+
+     //在android代码中调用此方法
+     function showInfoFromJava(msg){
+     alert("来自客户端的信息："+msg);
+     }
+     */
+
 }

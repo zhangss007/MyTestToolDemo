@@ -13,9 +13,16 @@
     tools:showIn="@layout/app_bar_main">
 
     <Button
+        android:id="@+id/btn_uninstall_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uninstall App"
+        />
+    <Button
         android:id="@+id/btn_test_zxing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/btn_uninstall_app"
         android:text="Test Zxing"
         />
 
@@ -33,6 +40,13 @@
         android:layout_height="wrap_content"
         android:text="test_activity_manager"
         android:layout_below="@id/btn_test_rx_java_1"
+        />
+    <Button
+        android:id="@+id/btn_test_uri"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_activity_manager"
+        android:text="Test Uri"
         />
     <EditText
         android:id="@+id/m_et"
