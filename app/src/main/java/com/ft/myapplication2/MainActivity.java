@@ -1,5 +1,7 @@
 package com.ft.myapplication2;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -16,7 +18,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ft.myapplication2.dagger2_test.DaggerTest;
@@ -25,7 +29,13 @@ import com.ft.myapplication2.sample.BusinessLogic;
 import com.ft.myapplication2.sample.Todo;
 import com.ft.myapplication2.utils.L;
 import com.ft.myapplication2.utils.T;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 
@@ -43,35 +53,109 @@ import rx.schedulers.Schedulers;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "MainActivity";
     @BindView(R.id.btn_test_rx_java_1)
     Button rxJavaTest;
 
     @BindView(R.id.btn_test_zxing)
     Button testZxing;
 
-    @BindView(R.id.m_iv)
-    ImageView imageView;
+    @BindView(R.id.btn_activity_manager)
+    Button testActivityManager;
+
+    @BindView(R.id.m_et)
+    EditText mshow;
 
     //@OnClick(R.id.btn_test_rx_java_1)
-    @OnClick({R.id.btn_test_rx_java_1,R.id.btn_test_zxing})
+    @OnClick({R.id.btn_test_rx_java_1,R.id.btn_test_zxing,R.id.btn_activity_manager})
     public void onClick(View view){
         if (rxJavaTest == view){
 
             DaggerTest.test();
-            RxJava_Scheduler_DrableRes s = new RxJava_Scheduler_DrableRes();
-            s.setImageView(imageView);
-            Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
-            s.setDrawable(drawable);
-            s.test();
+
+            testOkhttp_get1();
         }else if (testZxing == view){
             Intent intent = new Intent(MainActivity.this,ZxingTestActivity.class);
             startActivity(intent);
 
+        }else if (testActivityManager == view){
+
         }
     }
 
+    //=======================okhttp test=================================
 
 
+    /**
+     * get 异步的实现方式
+     */
+    public void testOkhttp_get(){
+
+        //创建OkhttpClient对象
+        OkHttpClient mOkHttpClient = new OkHttpClient();
+        //创建一个Request
+        Request request = new Request.Builder()
+                .url("https://github.com/hongyangAndroid")
+                .build();
+        //new Call
+        Call call = mOkHttpClient.newCall(request);
+        //请求加入调度
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+
+                L.d(TAG,"HtmlStr:" + response.body().string());
+            }
+        });
+    }
+
+
+    /**
+     * get 同步的实现方式
+     */
+    public void testOkhttp_get1()  {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+
+                    //创建OkHttpClient对象
+                    OkHttpClient okHttpClient = new OkHttpClient();
+                    Request request = new Request.Builder()
+                            .url("https://github.com/hongyangAndroid")
+                            .build();
+
+                    Response response = okHttpClient.newCall(request).execute();
+                    if (response.isSuccessful()){
+                        L.d(TAG,"HtmlString:" + response.body().string());
+                    }
+
+                } catch (IOException e) {
+
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+
+    }
+   //===================test ActivityManger==============================
+
+    public void testActivityManager(){
+
+        ActivityManager activityManager = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
+        String value = "";
+        L.d(TAG,"Object Heap:" + activityManager.getMemoryClass());
+//        mshow.append();
+    }
     //===================================================================
 
 

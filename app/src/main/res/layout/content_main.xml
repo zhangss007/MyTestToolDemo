@@ -27,10 +27,17 @@
         android:text="Test RxJava1"
         />
 
-    <ImageView
-        android:id="@+id/m_iv"
+    <Button
+        android:id="@+id/btn_activity_manager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_test_rx_java_1"/>
+        android:text="test_activity_manager"
+        android:layout_below="@id/btn_test_rx_java_1"
+        />
+    <EditText
+        android:id="@+id/m_et"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/btn_activity_manager"/>
 
 </RelativeLayout>
