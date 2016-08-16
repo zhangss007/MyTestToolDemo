@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ft.myapplication2.dagger2_test.DaggerTest;
+import com.ft.myapplication2.mnative.TestNative;
 import com.ft.myapplication2.rxjava.RxJava_Scheduler_DrableRes;
 import com.ft.myapplication2.sample.BusinessLogic;
 import com.ft.myapplication2.sample.Todo;
@@ -74,8 +75,14 @@ public class MainActivity extends AppCompatActivity
     @BindView(R.id.btn_test_uri)
     Button testUri;
 
+    @BindView(R.id.btn_test_1)
+    Button btnTest;
+
+    static {
+        System.loadLibrary("native-test-jni");
+    }
     //@OnClick(R.id.btn_test_rx_java_1)
-    @OnClick({R.id.btn_test_rx_java_1,R.id.btn_test_zxing,R.id.btn_activity_manager,R.id.btn_uninstall_app,R.id.btn_test_uri})
+    @OnClick({R.id.btn_test_rx_java_1,R.id.btn_test_zxing,R.id.btn_activity_manager,R.id.btn_uninstall_app,R.id.btn_test_uri,R.id.btn_test_1})
     public void onClick(View view){
         if (rxJavaTest == view){
 
@@ -88,6 +95,7 @@ public class MainActivity extends AppCompatActivity
 
         }else if (testActivityManager == view){
 
+            T.showShort(MainActivity.this,"From JNi" + TestNative.test());
         }else if (uninstallApp == view){
             Uri packageUri = Uri.parse("package:"+MainActivity.this.getPackageName());
             Intent intent = new Intent(Intent.ACTION_DELETE,packageUri);
@@ -99,6 +107,10 @@ public class MainActivity extends AppCompatActivity
             getImage.addCategory(Intent.CATEGORY_OPENABLE);
             getImage.setType(MIME_TYPE_IMAGE_JPEG);
             startActivityForResult(getImage, ACTIVITY_GET_IMAGE);
+        }else if(btnTest == view){
+
+            Intent intent = new Intent(MainActivity.this,TestActivity.class);
+            startActivity(intent);
         }
 
     }

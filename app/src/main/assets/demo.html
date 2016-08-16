@@ -30,12 +30,22 @@
 
 <body>
 <p>测试Android WebView 与 Javascript 交互</p>
-<!--<input id = "name_input" class = "inputStyle" type="text"/>
-<a class = "rect" onclick="sendInfoToJava()">JS调用Java</a>-->
+<input id = "name_input" class = "inputStyle" type="text"/>
+<a class = "rect" onclick="sendInfoToJava()">JS调用Java</a>
 
 <script>
 
-window.alert(5 + 6);
+     document.getElementById("name_input").innerHTML="我的第一个 JavaScript 函数"
+     function sendInfoToJava(){
+     //调用android程序中的方法，并传递参数
+     var name = document.getElementById("name_input").value;
+     window.AndroidWebView.showInfoFromJs(name);
+     }
+
+     //在android代码中调用此方法
+     function showInfoFromJava(msg){
+     alert("来自客户端的信息："+msg);
+     }
   </script>
 
 </body>

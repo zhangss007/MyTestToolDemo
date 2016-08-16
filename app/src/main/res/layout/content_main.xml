@@ -48,6 +48,13 @@
         android:layout_below="@id/btn_activity_manager"
         android:text="Test Uri"
         />
+    <Button
+        android:id="@+id/btn_test_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_test_uri"
+        android:text="Test"
+        />
     <EditText
         android:id="@+id/m_et"
         android:layout_width="wrap_content"
